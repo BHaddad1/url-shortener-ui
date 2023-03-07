@@ -21,5 +21,20 @@ describe('empty spec', () => {
   it("Should be able to fill out the form when a user types", () => {
     cy.get('[placeholder="Title..."]').type("Babies").should("have.value", "Babies");
     cy.get('[placeholder="URL to Shorten..."]').type("www.babiesarecute.com").should("have.value", "www.babiesarecute.com");
+  });
+  it("Should render a shortened URL when a user fills out and submits the form", () => {
+    cy.intercept("POST", "http://localhost:3001/api/v1/urls", {
+      id: 5,
+      long_url: "www.coffeeiscool.com",
+      short_url: "http://localhost:3001/useshorturl/3",
+      title: "coffee"
+    })
+    cy.get('[placeholder="Title..."]').type("Babies")
+    cy.get('[placeholder="URL to Shorten..."]').type("www.babiesarecute.com")
+    cy.get("button").click()
+    cy.get('section > :nth-child(4)').should("be.visible");
+    cy.get(':nth-child(4) > h3.url-link').contains("coffee").should("be.visible");
+    cy.get(':nth-child(3) > a.url-link').contains("http://localhost:3001/useshorturl/3").should("be.visible");
+    cy.get(':nth-child(4) > p.url-link').contains("www.coffeeiscool.com").should("be.visible");
   })
 })
