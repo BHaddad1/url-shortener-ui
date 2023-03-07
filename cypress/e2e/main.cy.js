@@ -18,4 +18,8 @@ describe('empty spec', () => {
     cy.get('[placeholder="URL to Shorten..."]').should("be.visible");
     cy.get("button").contains("Shorten Please!").should("be.visible");
   });
+  it("Should be able to fill out the form when a user types", () => {
+    cy.get('[placeholder="Title..."]').type("Babies").should("have.value", "Babies");
+    cy.get('[placeholder="URL to Shorten..."]').type("www.babiesarecute.com").should("have.value", "www.babiesarecute.com");
+  })
 })
