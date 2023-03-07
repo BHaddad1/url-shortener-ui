@@ -20,12 +20,16 @@ export class App extends Component {
     })
   }
 
+  grabResponse = (res) => {
+    this.setState({ urls: [...this.state.urls, res] })
+  }
+
   render() {
     return (
       <main className="App">
         <header>
           <h1>URL Shortener</h1>
-          <UrlForm />
+          <UrlForm grabResponse={this.grabResponse} />
         </header>
 
         <UrlContainer urls={this.state.urls}/>
