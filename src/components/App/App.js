@@ -15,9 +15,7 @@ export class App extends Component {
 
   componentDidMount() {
     getUrls()
-      .then(data => {this.setState({urls: data.urls})
-      console.log(this.state.urls)
-    })
+      .then(data => this.setState({urls: data.urls}))
   }
 
   grabResponse = (res) => {
